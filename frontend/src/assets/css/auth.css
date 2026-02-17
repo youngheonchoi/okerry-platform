@@ -1,0 +1,126 @@
+/* 기본 여백 제거 */
+html, body, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+/* 기본 배경색 지정 (선택사항) */
+body {
+    background-color: #343541;
+}
+
+/* 전체 배경 */
+.auth-container {
+    min-height: 100vh;
+    background-color: #343541; /* ChatGPT 다크 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* 중앙 박스 */
+.auth-box {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* 제목 */
+.auth-title {
+    text-align: center;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* 인풋 */
+.auth-input {
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #565869;
+    background-color: #40414f;
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.auth-input::placeholder {
+    color: #a0a0a0;
+}
+
+.auth-input:focus {
+    border-color: #10a37f;
+    box-shadow: 0 0 0 2px rgba(16, 163, 127, 0.2);
+}
+
+/* 버튼 공통 */
+.auth-button {
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+}
+
+/* 메인 버튼 */
+.auth-button.primary {
+    background-color: #10a37f;
+    color: white;
+}
+
+.auth-button.primary:hover {
+    background-color: #0e8f6f;
+}
+
+/* 보조 버튼 */
+.auth-button.secondary {
+    background-color: transparent;
+    border: 1px solid #565869;
+    color: white;
+}
+
+.auth-button.secondary:hover {
+    background-color: #40414f;
+}
+
+/* 이메일 + 인증 버튼 정렬 */
+.email-row {
+    display: flex;
+    gap: 8px;
+}
+
+.email-row .auth-input {
+    flex: 1;
+}
+
+/* 인증 버튼 */
+.verify-button {
+    padding: 0 14px;
+    border-radius: 8px;
+    border: none;
+    background-color: #10a37f;
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.verify-button:hover {
+    background-color: #0e8f6f;
+}
+
+/* 모바일 대응 */
+@media (max-width: 480px) {
+    .auth-box {
+        max-width: 100%;
+    }
+}

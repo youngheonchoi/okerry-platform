@@ -1,0 +1,15 @@
+# ===== backend (Spring / Gradle) =====
+backend/.gradle
+backend/build
+backend/out
+
+# ===== frontend (React / Node) =====
+frontend/node_modules
+frontend/build
+frontend/dist
+
+# ===== 공통 =====
+.env
+*.log
+.DS_Store
+.idea
