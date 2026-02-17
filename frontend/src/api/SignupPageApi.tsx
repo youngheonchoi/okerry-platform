@@ -12,3 +12,16 @@ export async function sendEmailVerification(email: string) {
     }
 }
 
+export async function sendEmailVerification2(email: string, code: String) {
+    const res = await fetch("http://localhost:8080/auth/code-check", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, code }),
+    });
+
+    if (!res.ok) {
+        throw new Error("메일 발송 실패");
+    }
+}

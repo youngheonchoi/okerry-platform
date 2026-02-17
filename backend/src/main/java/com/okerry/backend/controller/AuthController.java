@@ -31,4 +31,26 @@ public class AuthController {
 
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/code-check")
+    public ResponseEntity<Void> codeCheck(@RequestBody Map<String, String> okMap) throws Exception {
+        String email = okMap.get("email");
+        String curCode = okMap.get("code");
+
+        if (curCode == null || curCode.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // 인증번호 확인
+        String code = authServiceImpl.selectEmailAuthCode(okMap);
+
+        if(curCode.equals(code)){
+            // 인증여부 갱신
+            authServiceImpl.updateEmailAuthStatus(okMap);
+        }else{
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok().build();
+    }
 }

@@ -1,6 +1,6 @@
 import React, { FC, useState, ChangeEvent } from "react";
 import "../assets/css/auth.css";
-import {sendEmailVerification} from "../api/SignupPageApi";
+import {sendEmailVerification, sendEmailVerification2} from "../api/SignupPageApi";
 
 const SignupPage: FC = () => {
     const [email, setEmail] = useState<string>("");
@@ -30,6 +30,15 @@ const SignupPage: FC = () => {
             console.error(err);
         }
     };
+
+    const handleVerifyClick2 = async (): Promise<void> => {
+        if(!verificationCode){
+            alert("인증번호를 입력해주세요.");
+            return;
+        }
+
+        await sendEmailVerification2(email, verificationCode);
+    }
 
     const handleSignup = (): void => {
         console.log("Signup:", { email, verificationCode, password });
@@ -71,7 +80,7 @@ const SignupPage: FC = () => {
                         />
                         <button
                             className="verify-button"
-                            onClick={handleVerifyClick}
+                            onClick={handleVerifyClick2}
                         >
                             인증
                         </button>

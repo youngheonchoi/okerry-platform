@@ -10,4 +10,19 @@
         VALUES (#{email}, #{code}, NOW() + INTERVAL 5 MINUTE, 'N');
     </insert>
 
+    <select id="selectEmailAuthCode" parameterType="map" resultType="String">
+        SELECT
+            CODE
+        FROM
+            MAIL_AUTH
+        WHERE
+            TARGET_EMAIL = #{email}
+        ORDER BY
+            expired_date DESC
+        LIMIT 1
+    </select>
+
+    <update id="updateEmailAuthStatus">
+        UPDATE mail_auth set auth_yn = 'Y' where target_email = #{email} and code = #{code}
+    </update>
 </mapper>

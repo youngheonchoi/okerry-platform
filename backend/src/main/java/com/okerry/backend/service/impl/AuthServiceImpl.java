@@ -37,6 +37,15 @@ public class AuthServiceImpl implements AuthService {
 
             mailSender.send(message);
         }
+    }
 
+    @Override
+    public String selectEmailAuthCode(Map<String, String> okMap) throws Exception {
+        return authServiceDAO.selectEmailAuthCode(okMap);
+    }
+
+    @Override
+    public void updateEmailAuthStatus(Map<String, String> okMap) throws Exception {
+        authServiceDAO.updateEmailAuthStatus(okMap);
     }
 }
