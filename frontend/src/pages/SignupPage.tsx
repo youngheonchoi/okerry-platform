@@ -1,14 +1,18 @@
 import React, { FC, useState, ChangeEvent } from "react";
 import "../assets/css/auth.css";
-import {sendEmailVerification, sendEmailVerification2} from "../api/SignupPageApi";
+import {sendEmailVerification, sendEmailVerification2, signUp} from "../api/SignupPageApi";
+import {useNavigate} from "react-router-dom";
 
 const SignupPage: FC = () => {
     const [email, setEmail] = useState<string>("");
     const [verificationCode, setVerificationCode] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [showVerification, setShowVerification] = useState<boolean>(false);
+    const [disabled, setDisabled] = useState(false);
+    const [auth, setAuth] = useState(false);
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let navigate = useNavigate();
 
     const handleVerifyClick = async (): Promise<void> => {
         if(!email){
@@ -21,11 +25,14 @@ const SignupPage: FC = () => {
             return;
         }
 
+        setDisabled(true);
+
         try {
             await sendEmailVerification(email);
             alert("입력하신 이메일로 인증 메일을 발송 했습니다.")
             setShowVerification(true);
         } catch (err) {
+            setDisabled(false);
             alert("이메일 발송에 실패했습니다.");
             console.error(err);
         }
@@ -37,11 +44,36 @@ const SignupPage: FC = () => {
             return;
         }
 
-        await sendEmailVerification2(email, verificationCode);
+        try{
+            await sendEmailVerification2(email, verificationCode);
+            alert("인증했습니다.")
+            setAuth(true);
+        }catch (err){
+            alert("인증번호가 틀렸습니다.");
+            setAuth(false);
+        }
     }
 
-    const handleSignup = (): void => {
-        console.log("Signup:", { email, verificationCode, password });
+    const handleSignup = async (): Promise<void> => {
+        if(!auth){
+            alert("이메일을 인증해주세요.");
+            return;
+        }
+
+        if(!password){
+            alert("비밀번호를 입력해주세요.");
+            return;
+        }
+
+        try{
+            await signUp(email, password);
+            console.log("Signup:", { email, password });
+            alert("환영합니다.");
+        }catch(err){
+            alert("회원가입에 실패했습니다.");
+        }
+
+        navigate("/login");
     };
 
     return (
@@ -58,6 +90,7 @@ const SignupPage: FC = () => {
                         onChange={(e: ChangeEvent<HTMLInputElement>) =>
                             setEmail(e.target.value)
                         }
+                        disabled={disabled}
                     />
                     <button
                         className="verify-button"

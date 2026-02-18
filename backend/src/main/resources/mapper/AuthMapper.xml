@@ -25,4 +25,44 @@
     <update id="updateEmailAuthStatus">
         UPDATE mail_auth set auth_yn = 'Y' where target_email = #{email} and code = #{code}
     </update>
+
+    <insert parameterType="map" id="insertUser">
+        insert into user_mst(email, password, create_date)
+        values (#{email}, #{password}, now())
+    </insert>
+
+    <select parameterType="map" id="selectEmailCheck">
+        select
+            count(email)
+        from
+            user_mst
+        where
+            email = #{email}
+    </select>
+
+    <select parameterType="map" id="selectUser" resultType="map">
+        select
+            email
+            , password
+            , auth
+            , status
+            , login_fail_cnt
+            , last_login_date
+            , create_date
+            , update_date
+        from
+            user_mst
+        where
+            email = #{id}
+    </select>
+
+    <update parameterType="map" id="actionLogin">
+        update
+            user_mst
+        set
+            last_login_date = now()
+            , login_fail_cnt = 0
+        where
+            email = #{id}
+    </update>
 </mapper>

@@ -1,14 +1,21 @@
 import React, { FC, useState, ChangeEvent } from "react";
 import { useNavigate } from 'react-router-dom';
 import "../assets/css/auth.css";
+import {actionLogin} from "../api/LoginPageApi";
 
 const LoginPage: FC = () => {
     const [id, setId] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     let navigate = useNavigate();
 
-    const handleLogin = (): void => {
+    const handleLogin = async (): Promise<void> => {
         console.log("Login:", { id, password });
+
+        try{
+            await actionLogin(id, password);
+        }catch (err){
+
+        }
     };
 
     return (
